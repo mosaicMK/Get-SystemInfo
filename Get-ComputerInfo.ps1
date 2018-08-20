@@ -19,7 +19,7 @@ http://www.mosaicMK.com
 #>
 
 param(
-    [string]$ComputerName = $env:computername,
+    [string]$ComputerName = $env:computername
 )
 
 $Computer = $ComputerName
