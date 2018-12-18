@@ -2,26 +2,20 @@ Function Get-SystemInfo{
 <#
     .SYNOPSIS
     Gether system inforamtion
-
     .DESCRIPTION
     Gather information such as the Computer Name, OS, Memory Information, Disk Information and CPU Information.
-
     .PARAMETER Computer
     The local or remote computer you want to run the script on
-
     .NOTES
     Created By: Kris Gross
     Email: contact@mosaicMK.com
     Twitter: @kmgamd
-    Version: 2.0.1.1
-
+    Version: 2.0.1
     .LINK
     http://www.mosaicMK.com
 #>
 
-param(
-    [string]$ComputerName = $env:computername
-)
+param([string]$ComputerName = $env:computername)
 
 $Computer = $ComputerName
 #Gets the OS info
@@ -55,17 +49,17 @@ $getLockedStart = If (Get-Process logonui -ComputerName $Computer -ErrorAction S
 #Serial Number
 $SerialNumber = (Get-WmiObject win32_bios -ComputerName $Computer).SerialNumber
 #get IP address
-$IPAddress = (Get-WmiObject win32_NetworkadapterConfiguration | Where-Object IPAddress -ne $null).IPAddress
+$IPAddress = (Get-WmiObject win32_NetworkadapterConfiguration -ComputerName $Computer | Where-Object IPAddress -ne $null).IPAddress
 #Gets BIOS info
-$BIOSName = (Get-WmiObject win32_bios).Name
-$BIOSManufacturer = (Get-WmiObject win32_bios).Manufacturer
-$BIOSVersion = (Get-WmiObject win32_bios).Version
+$BIOSName = (Get-WmiObject win32_bios -ComputerName $Computer ).Name
+$BIOSManufacturer = (Get-WmiObject win32_bios -ComputerName $Computer).Manufacturer
+$BIOSVersion = (Get-WmiObject win32_bios -ComputerName $Computer).Version
 #Gets Motherboard info
-$MotherBoardName = (Get-WmiObject Win32_BaseBoard).Name
-$MotherBoardManufacturet = (Get-WmiObject Win32_BaseBoard).Manufacturer
-$MotherBoardModel = (Get-WmiObject Win32_BaseBoard).Model
-$MotherBoardProduct = (Get-WmiObject Win32_BaseBoard).Product
-$MotherBoardSerial = (Get-WmiObject Win32_BaseBoard).SerialNumber
+$MotherBoardName = (Get-WmiObject Win32_BaseBoard -ComputerName $Computer).Name
+$MotherBoardManufacturet = (Get-WmiObject Win32_BaseBoard -ComputerName $Computer).Manufacturer
+$MotherBoardModel = (Get-WmiObject Win32_BaseBoard -ComputerName $Computer).Model
+$MotherBoardProduct = (Get-WmiObject Win32_BaseBoard -ComputerName $Computer).Product
+$MotherBoardSerial = (Get-WmiObject Win32_BaseBoard -ComputerName $Computer).SerialNumber
 
 $ComputerInfo = New-Object -TypeName psobject
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name OperatingSystem -Value $os
@@ -80,7 +74,7 @@ $ComputerInfo | Add-Member -MemberType NoteProperty -Name MemorySlots -Value $Me
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MaxMemory -Value "$MaxMemory GB"
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MemorySlotsUsed -Value $TotalMemSticks
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MemoryInstalled -Value "$TotalMemSize GB"
-$ComputerInfo | Add-Member -MemberType NoteProperty -Name SystemDrive -Value "C:"
+$ComputerInfo | Add-Member -MemberType NoteProperty -Name SystemDrive -Value $ENV:SystemDrive
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name DiskSize -Value "$DiskSize GB"
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name FreeSpace -Value "$FreeSpace GB"
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name UsedSpace -Value "$UsedSapce GB"
@@ -91,6 +85,7 @@ $ComputerInfo | Add-Member -MemberType NoteProperty -Name MotherBoard -Value $Mo
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MotherBoardManufacturer -Value $MotherBoardManufacturet
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MotherBoardModel -Value $MotherBoardModel
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name MotherBoardSerialNumber -Value $MotherBoardSerial
+$ComputerInfo | Add-Member -MemberType NoteProperty -Name MotherBoardProduct -Value $MotherBoardProduct
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name BIOSName -Value $BIOSName
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name BIOSManufacturer -Value $BIOSManufacturer
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name BIOSVersion -Value $BIOSVersion
