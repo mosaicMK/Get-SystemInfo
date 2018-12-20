@@ -11,7 +11,7 @@
     RootModule = 'GetSystemInfo.psm1'
 
     # Version number of this module.
-    ModuleVersion = '2.0.1'
+    ModuleVersion = '2.0.2'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -103,7 +103,7 @@
             ProjectUri = 'https://www.mosaicmk.com'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri = 'https://3.bp.blogspot.com/-5AH8bMtdvcU/XBpsEqKMoFI/AAAAAAAABIw/cRbUnQwTwdIpZapoCD4ifYatBmy717zSgCLcBGAs/s1600/logo-transparent_NoWords.png.ico'
 
             # ReleaseNotes of this module
             ReleaseNotes = 'https://github.com/mosaicMK/Get-SystemInfo'
