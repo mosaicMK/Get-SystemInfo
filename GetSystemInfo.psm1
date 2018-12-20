@@ -7,16 +7,13 @@ Function Get-SystemInfo{
     .PARAMETER Computer
     The local or remote computer you want to run the script on
     .NOTES
-    Created By: Kris Gross
     Email: contact@mosaicMK.com
-    Twitter: @kmgamd
-    Version: 2.0.1
+    Version: 2.0.2
     .LINK
     http://www.mosaicMK.com
 #>
 
 param([string]$ComputerName = $env:computername)
-
 $Computer = $ComputerName
 #Gets the OS info
 $GetOS = Get-WmiObject -class Win32_OperatingSystem -computername $Computer
@@ -66,6 +63,7 @@ $ComputerInfo | Add-Member -MemberType NoteProperty -Name OperatingSystem -Value
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name OSArchitecture -Value $OSArchitecture
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name OSBuild -Value $OSBuildNumber
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name ComputerName -Value $ComputerName
+$ComputerInfo | Add-Member -MemberType NoteProperty -Name ComputerModel -Value $CompModel
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name SerialNumber -Value $SerialNumber
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name IPAddress -Value $IPAddress
 $ComputerInfo | Add-Member -MemberType NoteProperty -Name LoggedInUsers -Value $LoggedOnUser
